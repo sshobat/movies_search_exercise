@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+form p {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form input {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 10px 30px;
+    text-align: left;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+section p {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+article {
+    /* border: solid 1px black; */
+    max-width: 220px;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+img {
+    width: 200px;
+}
+
+.close {
+    width: 35px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
