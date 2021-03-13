@@ -68,30 +68,27 @@ var movies = [
 ];
 
 var moviesSection = document.querySelector('section');
-var input = document.querySelector('input');
-
-var filtered = movies;
 
 // insert all movies into window
 function insertMovieArticles(arr) {
-
-    for(var i = 0; i < arr.length; i++) {
-        var article = createMovieArticle(arr, i);
+    arr.forEach(function(item) {
+        var article = createMovieArticle(item);
         moviesSection.appendChild(article);
-    }
+    });
+    filtration(movies);
 }
 insertMovieArticles(movies);
 
 // create one movie article
-function createMovieArticle(arr, i) {
+function createMovieArticle(movie) {
 
     var article = document.createElement('article');
     var image = document.createElement('img');
     var name = document.createElement('p');
     var closeIcon = document.createElement('img');
 
-    image.setAttribute('src', arr[i].photoPath);
-    name.textContent = arr[i].name;
+    image.setAttribute('src', movie.photoPath);
+    name.textContent = movie.name;
     closeIcon.setAttribute('src', './img/delete-sign.png');
     closeIcon.setAttribute('class', 'close');
 
@@ -99,57 +96,31 @@ function createMovieArticle(arr, i) {
     article.appendChild(name);
     article.appendChild(closeIcon);
 
+    closeArticle(closeIcon, movie, article);
+
     return article;
 }
 
-function filter(arr, input) {
-    filtered = arr.filter(function(item) {
-        return item.name.toLowerCase().indexOf(input) > -1;
+//close movie article on click
+function closeArticle(el, item, article) {
+    el.addEventListener('click', function() {
+        movies.splice(movies.indexOf(item), 1);
+        article.remove();
+        // console.log(movies);
     });
 }
 
-// filter movies based on search input
-function searchMovies() {
+//filtrate array
+function filtration(arr) {
 
-    var inputValue = this.value.toLowerCase();
-
-    filter(movies, inputValue);
-
-    moviesSection.innerHTML = "";
-    insertMovieArticles(filtered);
-    
-    removeMovie(filtered);
-
-    console.log(filtered);
-
-}
-input.addEventListener("keyup", searchMovies);
-
-// removes movies on click
-function removeMovie(arr) {
-
-    var close = document.querySelectorAll('.close');
-   
-    close.forEach(function(item) {
-
-        item.addEventListener('click', function(event) {
-
-            for (var i = 0; i < arr.length; i++) {
-
-                if (event.currentTarget.previousElementSibling.textContent === arr[i].name) {
-                        
-                    arr.splice(i, 1);
-                    console.log(filtered);
-
-                    moviesSection.innerHTML = "";
-
-                    insertMovieArticles(arr);
-
-                    // removeMovie(arr);
-                    
-                }
-            }
+    var input = document.querySelector('input');
+    input.addEventListener('keyup', function() {
+        var inputValue = this.value.toLowerCase();
+        filtered = arr.filter(function(item) {
+            return item.name.toLowerCase().indexOf(inputValue) > -1;
         });
-    });
+        moviesSection.innerHTML = "";
+        insertMovieArticles(filtered);
+        // console.log(filtered);
+    })
 }
-removeMovie(filtered);
